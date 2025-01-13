@@ -4,8 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import { Link } from "lucide-react";
-import { AiOutlineInstagram, AiFillFacebook, AiOutlineTwitter } from "react-icons/ai";
+import { AiOutlineInstagram, AiFillFacebook, AiOutlineTwitter, AiOutlineLinkedin } from "react-icons/ai";
 
 
 
@@ -44,28 +43,34 @@ const FAQS = () => {
               Career
             </AccordionTrigger>
             <AccordionContent>
-              Join Emiraxis as a freelancer by simply clicking the button, which will directly take you to the varity of options
+              Join Emiraxis as a freelancer by simply clicking the button, which will directly take you to the variety of options.{" "}
+              <a href="/career" className="font-bold text-blue-500 hover:underline text-xl">
+                Career
+              </a>
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="item-4">
-  <AccordionTrigger>
-    Our Social Media
-  </AccordionTrigger>
-  <AccordionContent>
-    <div style={{ display: "flex", gap: "10px" }}>
-      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-        <AiOutlineInstagram size={32} />
-      </a>
-      <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
-        <AiFillFacebook size={32} />
-      </a>
-      <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
-        <AiOutlineTwitter size={32} />
-      </a>
-    </div>
-  </AccordionContent>
-</AccordionItem>
+            <AccordionTrigger>
+              Our Social Media
+            </AccordionTrigger>
+            <AccordionContent>
+              <div style={{ display: "flex", gap: "10px" }}>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
+                  <AiOutlineInstagram size={32} />
+                </a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+                  <AiFillFacebook size={32} />
+                </a>
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+                  <AiOutlineTwitter size={32} />
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
+                  <AiOutlineLinkedin size={32} />
+                </a>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
         </Accordion>
 
 

@@ -1,15 +1,10 @@
 "use client";
 
 import { useState } from "react";
-
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import { useForm } from "react-hook-form";
-
 import * as z from "zod";
-
 import { Checkbox } from "@/components/ui/checkbox";
-
 import {
   Select,
   SelectContent,
@@ -17,9 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 import { Button } from "@/components/ui/button";
-
 import {
   Form,
   FormControl,
@@ -29,11 +22,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
 import { Input } from "@/components/ui/input";
-
 import { useToast } from "@/components/ui/use-toast";
-
 import { Textarea } from "@/components/ui/textarea";
 import { PiCheckLight, PiSmiley } from "react-icons/pi";
 import Navbar from "@/components/navbar";
@@ -44,17 +34,14 @@ const FormSchema = z.object({
   email: z.string().email(),
   job_title: z.string(),
   company_name: z.string(),
-  help: z.enum([
-    "Portfolio",
-    "Get a Quote",
-    "Other",
-  ]),
+  help: z.enum(["Portfolio", "Get a Quote", "Other"]),
   services: z.enum([
-    "Mobile App Develoment",
-    "Social Media Marketing",
-    "UI/UX Design",
-    "Branding",
-    "Website Development",
+    "Event Management",
+    "Event Staffing",
+    "Marketing & Promotions",
+    "Sponsorship Coordination",
+    "Logistics & Operations",
+    "Branding & Design",
   ]),
   info: z.string(),
 });
@@ -71,7 +58,7 @@ type FormValues = {
     | "Event Staffing"
     | "Marketing & Promotions"
     | "Sponsorship Coordination"
-    | "Logistics & Operation"
+    | "Logistics & Operations"
     | "Branding & Design";
   info: string;
   terms: boolean;
@@ -99,21 +86,35 @@ export default function ContactForm() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       setLoading(true);
-      const res = await fetch("/api/contact", {
+
+      // Prepare data for Web3Forms
+      const payload = {
+        access_key: "49559b83-1860-4fb3-b753-218c345b577c", // Replace with your actual Web3Forms API key
+        ...data,
+      };
+
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
       });
 
       if (!res.ok) {
-        throw new Error("Something went wrong");
+        throw new Error("Failed to submit form. Please try again.");
       }
 
       setSubmitted(true);
+
+      toast({
+        title: "Success",
+        description: "Your form has been submitted successfully!",
+      });
     } catch (error) {
       toast({
         title: "Error",
-        description: "Something went wrong",
+        description: "Something went wrong. Please try again later.",
       });
     } finally {
       setLoading(false);
@@ -121,7 +122,7 @@ export default function ContactForm() {
   }
 
   return (
-    <div className=" w-full   md:items-center md:justify-center bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden ">
+    <div className="w-full md:items-center md:justify-center bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden">
       <Navbar
         scrollToWebsiteDesign={() => {}}
         scrollToGraphicDesign={() => {}}
@@ -130,38 +131,12 @@ export default function ContactForm() {
         scrollToServices={() => {}}
       />
       <div className="md:flex items-start justify-center md:py-20 px-6">
-        <div className="">
-          <div className="text-5xl font-medium  w-full md:w-2/3  pb-5 md:text-7xl bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
+        <div>
+          <div className="text-5xl font-medium w-full md:w-2/3 pb-5 md:text-7xl bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
             Contact our sales team
           </div>
-          <div
-            className="
-              
-              py-4
-              text-gray-300
-                    "
-          >
+          <div className="py-4 text-gray-300">
             Let&apos;s talk about how Emiraxis can help your Event Elevate.
-          </div>
-
-          <div className="bg-[#f6f5f4] md:w-4/5 space-y-6 p-4 rounded-2xl my-4 hidden md:flex md:flex-col">
-            <div className="flex gap-4 border-b ">
-              <div className=" font-normal pb-4 ">
-              Your all-in-one agency for streamlining knowledge-sharing, executing projects, and  fostering seamless collaboration across your company.
-              </div>
-            </div>
-
-            <div className="flex gap-4 border-b ">
-              <div className=" font-normal pb-4 ">
-              Enterprise-grade solutions to ensure secure user access and robust management with Emiraxis
-              </div>
-            </div>
-
-            <div className="flex gap-4  ">
-              <div className=" font-normal pb-4 ">
-              Personalized support from Emiraxis to guide your setup and create the perfect plan tailored to your events needs.
-              </div>
-            </div>
           </div>
         </div>
 
@@ -169,40 +144,27 @@ export default function ContactForm() {
           {!submitted ? (
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="
-             space-y-4
-             h-full
-             border rounded-3xl p-10
-             md:w-1/3
-            
-            
-                     
-                        "
+              className="space-y-4 h-full border rounded-3xl p-10 md:w-1/3"
             >
-              <div className="md:flex items-center gap-6 ">
+              <div className="md:flex items-center gap-6 text-white">
                 <FormField
                   control={form.control}
                   name="first_name"
                   render={({ field }) => (
-                    <FormItem className="items-center justify-center  w-full">
-                      <FormLabel className="text-sm bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
-                        First name *
-                      </FormLabel>
+                    <FormItem>
+                      <FormLabel className="text-white">First name *</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
                     </FormItem>
                   )}
                 />
-
                 <FormField
                   control={form.control}
                   name="last_name"
                   render={({ field }) => (
-                    <FormItem className="items-center justify-center  w-full">
-                      <FormLabel className="text-sm bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
-                        Last name *
-                      </FormLabel>
+                    <FormItem>
+                      <FormLabel className="text-white">Last name *</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -210,45 +172,39 @@ export default function ContactForm() {
                   )}
                 />
               </div>
+              <div className="items-center gap-6 text-white">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-white">Email *</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem className="items-center justify-center  w-full">
-                    <FormLabel className="text-sm bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
-                      Email *
-                    </FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="company_name"
-                render={({ field }) => (
-                  <FormItem className="items-center justify-center  w-full">
-                    <FormLabel className="text-sm bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
-                      Company name*
-                    </FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-
+                <FormField
+                  control={form.control}
+                  name="company_name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-white">Company name *</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
               <FormField
                 control={form.control}
                 name="services"
                 render={({ field }) => (
-                  <FormItem className="items-center justify-center w-full">
-                    <FormLabel className="text-sm bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
-                    Services you are interested in
-                    </FormLabel>
+                  <FormItem>
+                    <FormLabel className="text-white">Services you are interested in</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
@@ -259,12 +215,8 @@ export default function ContactForm() {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <div className="flex gap-4">
-                          <SelectItem value="Event Management">
-                          Event Management
-                          </SelectItem>
-                        </div>
-                        <SelectItem value="Event Staffing:">Event Staffing</SelectItem>
+                        <SelectItem value="Event Management">Event Management</SelectItem>
+                        <SelectItem value="Event Staffing">Event Staffing</SelectItem>
                         <SelectItem value="Marketing & Promotions">Marketing & Promotions</SelectItem>
                         <SelectItem value="Sponsorship Coordination">Sponsorship Coordination</SelectItem>
                         <SelectItem value="Logistics & Operations">Logistics & Operations</SelectItem>
@@ -279,31 +231,20 @@ export default function ContactForm() {
                 control={form.control}
                 name="help"
                 render={({ field }) => (
-                  <FormItem className="items-center justify-center  w-full">
-                    <FormLabel className="text-sm bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
-                      How can we help ?
-                    </FormLabel>
+                  <FormItem>
+                    <FormLabel className="text-white">How can we help?</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger
-                        
-                        
-                        >
+                        <SelectTrigger>
                           <SelectValue placeholder="Select an option" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <div className="flex gap-4">
-                          <SelectItem value="Portfolio">
-                            Portfolio
-                          </SelectItem>
-                        </div>
-                        <SelectItem value="Book a Meeting">Book a Meeting</SelectItem>
+                        <SelectItem value="Portfolio">Portfolio</SelectItem>
                         <SelectItem value="Get a Quote">Get a Quote</SelectItem>
-
                         <SelectItem value="Other">Other</SelectItem>
                       </SelectContent>
                     </Select>
@@ -315,10 +256,8 @@ export default function ContactForm() {
                 control={form.control}
                 name="info"
                 render={({ field }) => (
-                  <FormItem className="items-center justify-center w-full">
-                    <FormLabel className="text-sm bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50">
-                      Anything else ?
-                    </FormLabel>
+                  <FormItem>
+                    <FormLabel className="text-white">Anything else?</FormLabel>
                     <FormControl>
                       <Textarea style={{ height: "100px" }} {...field} />
                     </FormControl>
@@ -326,67 +265,24 @@ export default function ContactForm() {
                 )}
               />
 
-              <div className="flex gap-4 items-center">
-                <div>
-                  <Checkbox
-                    className="
-                outline
-                border-2
-                text-sm
-                font-light
-                bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400
-                "
-                  />
-                </div>
-                <div className="text-xs font-light  md:w-3/4 mb-1 bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
-                  I agree to Emiraxis&apos; sending marketing communications related
-                  to Emiraxis
+              <div className="flex gap-4 items-center text-white">
+                <Checkbox />
+                <div className="text-xs">
+                  I agree to Emiraxis&apos; sending marketing communications.
                 </div>
               </div>
 
-              <div className="flex items-center gap-4">
-                <Button
-                  type="submit"
-                  className="
-                            text-sm
-                            font-light
-                        
-                            "
-                  disabled={loading}
-                  onClick={() => form.handleSubmit(onSubmit)}
-                >
-                  Submit
-                </Button>
-              </div>
+              <Button type="submit" disabled={loading}>
+                Submit
+              </Button>
             </form>
           ) : (
-            <>
-              <div
-                className="
-        text-xl 
-        
-        md:text-2xl 
-        flex 
-        items-center
-        justify-center
-        flex-col
-        
-
- 
-        px-8
-
-        "
-              >
-                <div className="w-80 py-20">
-                  <PiSmiley className="text-6xl text-[#6c6684] mx-auto" />
-
-                  <div className="text-gray-500 font-light  text-center justify-center mx-auto py-10">
-                    We&apos;ve received your inquiry and will be contacting you
-                    via email shortly.
-                  </div>
-                </div>
+            <div className="text-xl flex items-center justify-center flex-col text-white">
+              <PiSmiley size={48} className="text-green-500" />
+              <div className="py-4">
+                Your form has been successfully submitted. Thank you!
               </div>
-            </>
+            </div>
           )}
         </Form>
       </div>

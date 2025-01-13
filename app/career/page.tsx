@@ -13,7 +13,7 @@ const plans = [
     description:
       "Join our team of waitstaff, bartenders, and storekeepers. Be part of leading events in the hospitality sector.",
     button: "Apply Now",
-    href: "/apply/basic", // Unique link for Basic Plan
+    href: "https://forms.gle/LPfhyjxdMdDSpXAn8", // Unique link for Basic Plan
   },
   {
     index: 1,
@@ -23,7 +23,7 @@ const plans = [
     description:
       "Become a promoter, host, or ambassador for exciting brands. Expand your horizons and join glamorous events today",
     button: "Apply Now",
-    href: "/apply/premium", // Unique link for Premium Plan
+    href: "https://forms.gle/LPfhyjxdMdDSpXAn8", // Unique link for Premium Plan
   },
   {
     index: 2,
@@ -33,7 +33,7 @@ const plans = [
     description:
       "Have 3+ years in events? Apply for project-based roles in staging, operations, or marketing with top companies",
     button: "Apply Now",
-    href: "/apply/enterprise", // Unique link for Enterprise Plan
+    href: "https://forms.gle/LPfhyjxdMdDSpXAn8", // Unique link for Enterprise Plan
   },
   {
     index: 3,
@@ -43,7 +43,7 @@ const plans = [
     description:
       "Looking for opportunities in registration, ticketing, crowd control, or guiding? Apply to join the event industry now",
     button: "Apply Now",
-    href: "/apply/custom", // Unique link for Custom Plan
+    href: "https://forms.gle/LPfhyjxdMdDSpXAn8", // Unique link for Custom Plan
   },
 ];
 
@@ -60,7 +60,7 @@ const Career = () => {
 
       <div className="flex items-center justify-center flex-col">
         <div className="text-5xl pb-10 md:pb-20 text-slate-300 px-6 text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-500 bg-opacity-50">
-          Explore Our Plans <br /> Choose What Fits You Best
+          Explore Our Applications <br /> Choose What Fits You Best
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-10 px-6 w-full max-w-screen-xl mx-auto pb-20">

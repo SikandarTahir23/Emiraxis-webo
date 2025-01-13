@@ -3,10 +3,10 @@
 import Image from "next/image";
 
 const designs = [
-  { image: "/images/project2.jpg"},
-  { image: "/images/project1.jpg"},
-  { image: "/images/project4.jpg"},
-  { image: "/images/project5.jpg"},
+  { image: "/images/mark1.jpg"},
+  { image: "/images/mark2.jpg"},
+  { image: "/images/mark3.jpg"},
+  { image: "/images/mark4.jpg"},
 ];
 
 const GraphicDesign = () => {
