@@ -85,7 +85,7 @@ const WebsiteDesign = () => {
                     height={500}
                     priority
                     className="h-auto max-w-full rounded-lg"
-                    src="/images/staff8.jpg"
+                    src="/images/staff13.jpg"
                     alt="Staff image 8"
                 />
             </div>
